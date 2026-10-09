@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>凝稳 · INR 记录</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="phone">
+    <header class="app-bar">
+      <span class="app-bar__title">凝稳</span>
+    </header>
+
+    <main id="view-home" class="view is-active"></main>
+    <main id="view-trend" class="view"></main>
+    <main id="view-settings" class="view"></main>
+
+    <nav class="tabbar">
+      <button class="tab is-active" data-tab="home">首页</button>
+      <button class="tab" data-tab="trend">趋势</button>
+      <button class="tab" data-tab="settings">我的</button>
+    </nav>
+
+    <button id="fab" class="fab" aria-label="记录">+</button>
+
+    <div id="sheet" class="sheet" hidden></div>
+    <div id="modal" class="modal" hidden></div>
+    <div id="toast" class="toast" hidden></div>
+  </div>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>

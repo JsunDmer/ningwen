@@ -1,0 +1,181 @@
+:root {
+  --bg: #f4f6f8;
+  --card: #ffffff;
+  --text: #1f2933;
+  --text-sub: #6b7280;
+  --line: #e5e7eb;
+  --brand: #2f6fed;
+  --ok: #16a34a;
+  --ok-bg: #e7f6ec;
+  --high: #dc2626;
+  --high-bg: #fdeaea;
+  --low: #2563eb;
+  --low-bg: #e8f0fe;
+  --radius: 16px;
+  --shadow: 0 6px 20px rgba(15, 23, 42, .08);
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; }
+body {
+  background: #dfe3e8;
+  font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+  color: var(--text);
+  display: flex; justify-content: center; align-items: center;
+  min-height: 100vh;
+}
+
+.phone {
+  position: relative;
+  width: 390px; height: 844px;
+  background: var(--bg);
+  border-radius: 36px;
+  overflow: hidden;
+  box-shadow: 0 24px 60px rgba(0,0,0,.25);
+  display: flex; flex-direction: column;
+}
+
+.app-bar {
+  height: 56px; display: flex; align-items: center; justify-content: center;
+  background: var(--card); border-bottom: 1px solid var(--line);
+  font-weight: 600; font-size: 17px;
+  padding-top: 8px;
+}
+
+.view { flex: 1; overflow-y: auto; padding: 16px 16px 96px; display: none; }
+.view.is-active { display: block; }
+
+.tabbar {
+  height: 60px; display: flex; background: var(--card);
+  border-top: 1px solid var(--line);
+}
+.tab {
+  flex: 1; border: 0; background: none; font-size: 13px;
+  color: var(--text-sub); cursor: pointer;
+}
+.tab.is-active { color: var(--brand); font-weight: 600; }
+
+.fab {
+  position: absolute; right: 20px; bottom: 78px;
+  width: 56px; height: 56px; border-radius: 50%;
+  border: 0; background: var(--brand); color: #fff;
+  font-size: 28px; line-height: 1; cursor: pointer;
+  box-shadow: 0 8px 20px rgba(47,111,237,.4);
+}
+
+.sheet, .modal {
+  position: absolute; inset: 0; background: rgba(15,23,42,.4);
+  display: flex; align-items: flex-end; z-index: 20;
+}
+/* 关键：类选择器的 display 会覆盖 UA 对 [hidden] 的 display:none，
+   必须显式声明，否则弹层/弹窗会在加载时直接显示 */
+.sheet[hidden], .modal[hidden] { display: none; }
+.modal { align-items: center; justify-content: center; }
+.toast {
+  position: absolute; left: 50%; bottom: 140px; transform: translateX(-50%);
+  background: rgba(31,41,51,.92); color: #fff; padding: 10px 16px;
+  border-radius: 10px; font-size: 14px; z-index: 40;
+}
+
+.card {
+  background: var(--card); border-radius: var(--radius);
+  box-shadow: var(--shadow); padding: 20px; margin-bottom: 16px;
+}
+.hero { text-align: center; }
+.hero__label { color: var(--text-sub); font-size: 14px; }
+.hero__value { font-size: 56px; font-weight: 700; line-height: 1.1; margin: 6px 0; }
+.hero__badge {
+  display: inline-block; padding: 4px 12px; border-radius: 999px;
+  font-size: 14px; font-weight: 600;
+}
+.badge--ok { color: var(--ok); background: var(--ok-bg); }
+.badge--high { color: var(--high); background: var(--high-bg); }
+.badge--low { color: var(--low); background: var(--low-bg); }
+.hero__meta { color: var(--text-sub); font-size: 13px; margin-top: 10px; }
+.hero__delta { font-weight: 600; }
+
+.section-title {
+  font-size: 14px; color: var(--text-sub); margin: 8px 4px;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.rec {
+  display: flex; align-items: center; gap: 12px;
+  background: var(--card); border-radius: 14px; padding: 14px;
+  margin-bottom: 10px; box-shadow: var(--shadow);
+}
+.rec__val { font-size: 22px; font-weight: 700; min-width: 52px; }
+.rec__val--high { color: var(--high); }
+.rec__val--low { color: var(--low); }
+.rec__body { flex: 1; }
+.rec__date { font-size: 13px; color: var(--text-sub); }
+.rec__note { font-size: 13px; color: var(--text); margin-top: 2px; }
+.rec__dose { font-size: 12px; color: var(--text-sub); }
+
+.sheet__panel {
+  width: 100%; background: var(--card);
+  border-radius: 20px 20px 0 0; padding: 20px;
+  animation: slideUp .22s ease;
+}
+@keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+.field { margin-bottom: 14px; }
+.field label { display: block; font-size: 13px; color: var(--text-sub); margin-bottom: 6px; }
+.field input, .field textarea {
+  width: 100%; border: 1px solid var(--line); border-radius: 10px;
+  padding: 12px; font-size: 16px; font-family: inherit;
+}
+.field__big input { font-size: 32px; font-weight: 700; text-align: center; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip {
+  border: 1px solid var(--line); background: #fff; border-radius: 999px;
+  padding: 6px 12px; font-size: 13px; cursor: pointer;
+}
+.chip.is-on { background: var(--brand); color: #fff; border-color: var(--brand); }
+.btn-row { display: flex; gap: 12px; margin-top: 8px; }
+.btn {
+  flex: 1; border: 0; border-radius: 12px; padding: 14px;
+  font-size: 16px; cursor: pointer;
+}
+.btn--ghost { background: #eef1f5; color: var(--text); }
+.btn--primary { background: var(--brand); color: #fff; font-weight: 600; }
+
+.toast[hidden] { display: none; }
+
+.chart { width: 100%; height: 220px; }
+.chart .band { fill: var(--ok-bg); }
+.chart .axis { stroke: var(--line); stroke-width: 1; }
+.chart .line { fill: none; stroke: var(--brand); stroke-width: 2.5; }
+.chart .dot { fill: var(--brand); }
+.chart .dot--high { fill: var(--high); }
+.chart .dot--low { fill: var(--low); }
+.chart .lbl { font-size: 10px; fill: var(--text-sub); }
+
+.seg { display: flex; gap: 8px; margin-bottom: 12px; }
+.seg button {
+  flex: 1; border: 1px solid var(--line); background: #fff;
+  border-radius: 10px; padding: 8px; font-size: 13px; cursor: pointer;
+}
+.seg button.is-on { background: var(--brand); color: #fff; border-color: var(--brand); }
+.stats { display: grid; grid-template-columns: repeat(3, 1fr); text-align: center; }
+.stats b { display: block; font-size: 20px; }
+.stats span { font-size: 12px; color: var(--text-sub); }
+
+.setting {
+  display: flex; justify-content: space-between; align-items: center;
+  background: var(--card); border-radius: 14px; padding: 16px;
+  margin-bottom: 10px; box-shadow: var(--shadow);
+}
+.setting label { font-size: 15px; }
+.setting input[type=number], .setting input[type=time] {
+  width: 96px; border: 1px solid var(--line); border-radius: 8px;
+  padding: 8px; font-size: 15px; text-align: right;
+}
+.setting input[type=checkbox] { width: 22px; height: 22px; }
+.row2 { display: flex; gap: 8px; align-items: center; }
+.privacy { font-size: 12px; color: var(--text-sub); text-align: center; margin-top: 16px; line-height: 1.7; }
+
+.modal__panel {
+  width: 300px; background: var(--card); border-radius: 16px; padding: 20px;
+  text-align: center;
+}
+.modal__panel h3 { margin: 0 0 8px; font-size: 16px; }
+.modal__panel p { color: var(--text-sub); font-size: 13px; margin: 0 0 16px; }
