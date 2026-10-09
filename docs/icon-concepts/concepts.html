@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<title>凝稳 · 图标方案预览</title>
+<style>
+  body { margin:0; background:#0f1218; color:#e8ecf3;
+         font-family:-apple-system,"PingFang SC","Helvetica Neue",Arial,sans-serif; }
+  .wrap { padding:36px 40px 48px; }
+  h1 { font-size:22px; font-weight:600; margin:0 0 4px; }
+  .sub { color:#8b94a6; font-size:13px; margin-bottom:28px; }
+  .grid { display:grid; grid-template-columns:repeat(3,1fr); gap:26px; }
+  .card { background:#171c26; border:1px solid #232a38; border-radius:16px; padding:20px; }
+  .row { display:flex; align-items:flex-end; gap:16px; }
+  .tile { border-radius:24%; overflow:hidden; box-shadow:0 6px 18px rgba(0,0,0,.45); }
+  .big { width:112px; height:112px; }
+  .small { width:52px; height:52px; }
+  .circle { border-radius:50%; }
+  .name { font-size:16px; font-weight:600; margin:18px 0 6px; }
+  .desc { font-size:12.5px; color:#8b94a6; line-height:1.55; }
+  .tag { display:inline-block; font-size:11px; color:#9fb4ff; background:#1c2440;
+         border:1px solid #2b3560; border-radius:999px; padding:2px 9px; margin-top:10px; }
+  .id { font-size:11px; color:#5d6577; letter-spacing:.14em; margin-bottom:10px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>凝稳 · App 图标方案</h1>
+  <div class="sub">INR 记录 · 蓝色品牌底 · 适配 Android 自适应图标（前景居中安全区）</div>
+  <div class="grid">
+
+    <div class="card">
+      <div class="id">方案 A</div>
+      <div class="row">
+        <div class="tile big"><svg viewBox="0 0 108 108" width="112" height="112">
+          <defs><linearGradient id="gA" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#4C8DFF"/><stop offset="1" stop-color="#2F6FED"/></linearGradient></defs>
+          <rect width="108" height="108" fill="url(#gA)"/>
+          <path d="M54 24 C54 24 32 49 32 63 a22 22 0 1 0 44 0 C76 49 54 24 54 24 Z" fill="#fff"/>
+          <rect x="28" y="56" width="52" height="8" rx="4" fill="#17A673"/>
+          <circle cx="62" cy="60" r="4.6" fill="#2F6FED"/>
+        </svg></div>
+        <div class="tile small circle"><svg viewBox="0 0 108 108" width="52" height="52">
+          <rect width="108" height="108" fill="url(#gA)"/>
+          <path d="M54 24 C54 24 32 49 32 63 a22 22 0 1 0 44 0 C76 49 54 24 54 24 Z" fill="#fff"/>
+          <rect x="28" y="56" width="52" height="8" rx="4" fill="#17A673"/>
+          <circle cx="62" cy="60" r="4.6" fill="#2F6FED"/>
+        </svg></div>
+      </div>
+      <div class="name">血滴 · 稳带</div>
+      <div class="desc">白色血滴代表 INR/血液检测，横穿的绿色区间带代表"目标范围"，蓝点在带内 = 指标达标。语义最直白。</div>
+      <div class="tag">推荐 · 辨识度高</div>
+    </div>
+
+    <div class="card">
+      <div class="id">方案 B</div>
+      <div class="row">
+        <div class="tile big"><svg viewBox="0 0 108 108" width="112" height="112">
+          <defs><linearGradient id="gB" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#4C8DFF"/><stop offset="1" stop-color="#2F6FED"/></linearGradient></defs>
+          <rect width="108" height="108" fill="url(#gB)"/>
+          <path d="M30 68 A24 24 0 0 1 78 68" fill="none" stroke="#fff" stroke-width="10" stroke-linecap="round" opacity="0.3"/>
+          <path d="M42 46.6 A24 24 0 0 1 66 46.6" fill="none" stroke="#17A673" stroke-width="10" stroke-linecap="round"/>
+          <line x1="54" y1="68" x2="47" y2="51" stroke="#fff" stroke-width="6" stroke-linecap="round"/>
+          <circle cx="54" cy="68" r="7" fill="#fff"/>
+        </svg></div>
+        <div class="tile small circle"><svg viewBox="0 0 108 108" width="52" height="52">
+          <rect width="108" height="108" fill="url(#gB)"/>
+          <path d="M30 68 A24 24 0 0 1 78 68" fill="none" stroke="#fff" stroke-width="10" stroke-linecap="round" opacity="0.3"/>
+          <path d="M42 46.6 A24 24 0 0 1 66 46.6" fill="none" stroke="#17A673" stroke-width="10" stroke-linecap="round"/>
+          <line x1="54" y1="68" x2="47" y2="51" stroke="#fff" stroke-width="6" stroke-linecap="round"/>
+          <circle cx="54" cy="68" r="7" fill="#fff"/>
+        </svg></div>
+      </div>
+      <div class="name">达标仪表</div>
+      <div class="desc">指针落在绿色区间内，直接表达"INR 在目标范围内"。绿色段即设定区间，强调"达标判断"这一核心功能。</div>
+      <div class="tag">功能导向</div>
+    </div>
+
+    <div class="card">
+      <div class="id">方案 C</div>
+      <div class="row">
+        <div class="tile big"><svg viewBox="0 0 108 108" width="112" height="112">
+          <defs><linearGradient id="gC" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#4C8DFF"/><stop offset="1" stop-color="#2F6FED"/></linearGradient></defs>
+          <rect width="108" height="108" fill="url(#gC)"/>
+          <rect x="24" y="44" width="60" height="16" rx="8" fill="#17A673" opacity="0.32"/>
+          <polyline points="32,76 47,60 59,67 76,42" fill="none" stroke="#fff" stroke-width="6.5"
+                    stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="76" cy="42" r="6.5" fill="#fff"/>
+        </svg></div>
+        <div class="tile small circle"><svg viewBox="0 0 108 108" width="52" height="52">
+          <rect width="108" height="108" fill="url(#gC)"/>
+          <rect x="24" y="44" width="60" height="16" rx="8" fill="#17A673" opacity="0.32"/>
+          <polyline points="32,76 47,60 59,67 76,42" fill="none" stroke="#fff" stroke-width="6.5"
+                    stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="76" cy="42" r="6.5" fill="#fff"/>
+        </svg></div>
+      </div>
+      <div class="name">趋势线</div>
+      <div class="desc">一条上升折线 + 目标带，呼应"趋势"页。偏数据感，适合强调记录与走势。</div>
+      <div class="tag">数据感</div>
+    </div>
+
+    <div class="card">
+      <div class="id">方案 D</div>
+      <div class="row">
+        <div class="tile big"><svg viewBox="0 0 108 108" width="112" height="112">
+          <defs><linearGradient id="gD" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#4C8DFF"/><stop offset="1" stop-color="#2F6FED"/></linearGradient></defs>
+          <rect width="108" height="108" fill="url(#gD)"/>
+          <circle cx="54" cy="54" r="25" fill="none" stroke="#fff" stroke-width="8.5" opacity="0.3"/>
+          <path d="M32.4 41.5 A25 25 0 0 1 75.6 41.5" fill="none" stroke="#17A673" stroke-width="8.5" stroke-linecap="round"/>
+          <path d="M54 40 C54 40 45 51 45 58 a9 9 0 1 0 18 0 C63 51 54 40 54 40 Z" fill="#fff"/>
+        </svg></div>
+        <div class="tile small circle"><svg viewBox="0 0 108 108" width="52" height="52">
+          <rect width="108" height="108" fill="url(#gD)"/>
+          <circle cx="54" cy="54" r="25" fill="none" stroke="#fff" stroke-width="8.5" opacity="0.3"/>
+          <path d="M32.4 41.5 A25 25 0 0 1 75.6 41.5" fill="none" stroke="#17A673" stroke-width="8.5" stroke-linecap="round"/>
+          <path d="M54 40 C54 40 45 51 45 58 a9 9 0 1 0 18 0 C63 51 54 40 54 40 Z" fill="#fff"/>
+        </svg></div>
+      </div>
+      <div class="name">环 · 滴</div>
+      <div class="desc">圆环 + 绿色进度弧 + 中心血滴，像"健康/监测"类 App。简洁现代，视觉平衡好。</div>
+      <div class="tag">简洁现代</div>
+    </div>
+
+    <div class="card">
+      <div class="id">方案 E</div>
+      <div class="row">
+        <div class="tile big"><svg viewBox="0 0 108 108" width="112" height="112">
+          <defs><linearGradient id="gE" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#4C8DFF"/><stop offset="1" stop-color="#2F6FED"/></linearGradient></defs>
+          <rect width="108" height="108" fill="url(#gE)"/>
+          <path d="M34 76 L34 40 L74 76 L74 40" fill="none" stroke="#fff" stroke-width="8"
+                stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="74" cy="40" r="6" fill="#17A673"/>
+        </svg></div>
+        <div class="tile small circle"><svg viewBox="0 0 108 108" width="52" height="52">
+          <rect width="108" height="108" fill="url(#gE)"/>
+          <path d="M34 76 L34 40 L74 76 L74 40" fill="none" stroke="#fff" stroke-width="8"
+                stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="74" cy="40" r="6" fill="#17A673"/>
+        </svg></div>
+      </div>
+      <div class="name">波形 N</div>
+      <div class="desc">字母「N」（凝稳 Ningwen）+ 折线波形双关，绿点为达标读数。抽象、品牌化，适合做长期品牌标记。</div>
+      <div class="tag">品牌化</div>
+    </div>
+
+    <div class="card">
+      <div class="id">方案 F</div>
+      <div class="row">
+        <div class="tile big"><svg viewBox="0 0 108 108" width="112" height="112">
+          <defs><linearGradient id="gF" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#4C8DFF"/><stop offset="1" stop-color="#2F6FED"/></linearGradient></defs>
+          <rect width="108" height="108" fill="url(#gF)"/>
+          <text x="54" y="72" text-anchor="middle" fill="#fff" font-size="58" font-weight="600"
+                font-family="PingFang SC,Heiti SC,Microsoft YaHei,sans-serif">稳</text>
+          <rect x="30" y="80" width="48" height="6" rx="3" fill="#17A673"/>
+        </svg></div>
+        <div class="tile small circle"><svg viewBox="0 0 108 108" width="52" height="52">
+          <rect width="108" height="108" fill="url(#gF)"/>
+          <text x="54" y="72" text-anchor="middle" fill="#fff" font-size="58" font-weight="600"
+                font-family="PingFang SC,Heiti SC,Microsoft YaHei,sans-serif">稳</text>
+          <rect x="30" y="80" width="48" height="6" rx="3" fill="#17A673"/>
+        </svg></div>
+      </div>
+      <div class="name">汉字「稳」</div>
+      <div class="desc">取"凝稳"的"稳"，白色汉字 + 绿色基线（稳如基线）。中文辨识直接，但要保证字体在设备上可用。</div>
+      <div class="tag">中文直白</div>
+    </div>
+
+  </div>
+</div>
+</body>
+</html>
