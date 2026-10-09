@@ -41,7 +41,7 @@ fun ExportSheet(records: List<Record>, onDismiss: () -> Unit) {
 }
 
 private fun shareCsv(context: Context, records: List<Record>) {
-  val fmt = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault())
+  val fmt = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
   val header = "日期,INR,用量(片),备注"
   val body = records.sortedBy { it.measuredAt }.joinToString("\n") { r ->
     val dose = r.doseTabs?.toString() ?: ""

@@ -33,7 +33,7 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
-private val fmt = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault())
+private val fmt = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
 
 private fun statusColor(status: InrStatus): Color = when (status) {
   InrStatus.OK -> Ok

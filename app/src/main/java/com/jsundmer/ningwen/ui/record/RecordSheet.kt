@@ -1,6 +1,8 @@
 package com.jsundmer.ningwen.ui.record
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -8,14 +10,20 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material3.Button
+import androidx.compose.material3.DatePicker
+import androidx.compose.material3.DatePickerDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilterChip
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -25,6 +33,37 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Date
+import java.util.Locale
+import java.util.TimeZone
+
+private val dateFmt = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+
+private fun todayLocalStart(): Long = Calendar.getInstance().apply {
+  set(Calendar.HOUR_OF_DAY, 0)
+  set(Calendar.MINUTE, 0)
+  set(Calendar.SECOND, 0)
+  set(Calendar.MILLISECOND, 0)
+}.timeInMillis
+
+// Material3 选择器返回 UTC 零点毫秒，需按 UTC 的 y/m/d 重建本地零点
+private fun utcMidnightToLocalStart(utcMidnightMillis: Long): Long {
+  val utc = Calendar.getInstance(TimeZone.getTimeZone("UTC")).apply { timeInMillis = utcMidnightMillis }
+  return Calendar.getInstance().apply {
+    clear()
+    set(utc.get(Calendar.YEAR), utc.get(Calendar.MONTH), utc.get(Calendar.DAY_OF_MONTH))
+  }.timeInMillis
+}
+
+private fun localStartToUtcMidnight(localMillis: Long): Long {
+  val local = Calendar.getInstance().apply { timeInMillis = localMillis }
+  return Calendar.getInstance(TimeZone.getTimeZone("UTC")).apply {
+    clear()
+    set(local.get(Calendar.YEAR), local.get(Calendar.MONTH), local.get(Calendar.DAY_OF_MONTH))
+  }.timeInMillis
+}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -37,6 +76,8 @@ fun RecordSheet(
   var doseText by remember { mutableStateOf(lastDose?.toString() ?: "") }
   var note by remember { mutableStateOf("") }
   var error by remember { mutableStateOf<String?>(null) }
+  var measuredAt by remember { mutableStateOf(todayLocalStart()) }
+  var showDatePicker by remember { mutableStateOf(false) }
   val chips = listOf("出血/淤青", "饮食变化", "漏服", "感冒/感染")
 
   ModalBottomSheet(onDismissRequest = onDismiss) {
@@ -52,6 +93,18 @@ fun RecordSheet(
         modifier = Modifier.fillMaxWidth(),
       )
       error?.let { Text(it, color = MaterialTheme.colorScheme.error, fontSize = 12.sp) }
+      Spacer(Modifier.height(12.dp))
+      Box {
+        OutlinedTextField(
+          value = dateFmt.format(Date(measuredAt)),
+          onValueChange = {},
+          readOnly = true,
+          label = { Text("测量日期") },
+          trailingIcon = { Icon(Icons.Filled.DateRange, contentDescription = null) },
+          modifier = Modifier.fillMaxWidth(),
+        )
+        Box(Modifier.matchParentSize().clickable { showDatePicker = true })
+      }
       Spacer(Modifier.height(12.dp))
       OutlinedTextField(
         value = doseText,
@@ -87,11 +140,24 @@ fun RecordSheet(
             if (v == null || v < 0.5 || v > 5.0) {
               error = "请输入 0.5–5.0 之间的数值"
             } else {
-              onSubmit(v, System.currentTimeMillis(), doseText.toDoubleOrNull(), note.ifBlank { null })
+              onSubmit(v, measuredAt, doseText.toDoubleOrNull(), note.ifBlank { null })
             }
           },
           modifier = Modifier.weight(1f),
         ) { Text("保存") }
+      }
+      if (showDatePicker) {
+        val pickerState = rememberDatePickerState(initialSelectedDateMillis = localStartToUtcMidnight(measuredAt))
+        DatePickerDialog(
+          onDismissRequest = { showDatePicker = false },
+          confirmButton = {
+            TextButton(onClick = {
+              pickerState.selectedDateMillis?.let { measuredAt = utcMidnightToLocalStart(it) }
+              showDatePicker = false
+            }) { Text("确定") }
+          },
+          dismissButton = { TextButton(onClick = { showDatePicker = false }) { Text("取消") } },
+        ) { DatePicker(state = pickerState) }
       }
     }
   }
