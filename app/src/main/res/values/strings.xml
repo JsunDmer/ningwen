@@ -1,3 +1,5 @@
 <resources>
   <string name="app_name">凝稳</string>
+  <string name="notif_channel_name">测量提醒</string>
+  <string name="notif_channel_desc">到期前一天与当天提醒测量 INR</string>
 </resources>
