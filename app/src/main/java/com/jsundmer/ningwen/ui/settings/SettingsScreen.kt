@@ -90,7 +90,7 @@ private fun CardRow(label: String, content: @Composable () -> Unit) {
 
 @Composable
 private fun CardRowClickable(label: String, onClick: () -> Unit) {
-  Card(Modifier.fillMaxWidth(), onClick = onClick) {
+  Card(onClick = onClick, modifier = Modifier.fillMaxWidth()) {
     Row(Modifier.fillMaxWidth().padding(16.dp), verticalAlignment = Alignment.CenterVertically) {
       Text(label, fontSize = 15.sp, modifier = Modifier.weight(1f))
       Text("›", fontSize = 18.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
