@@ -21,6 +21,7 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.drawText
 import androidx.compose.ui.text.rememberTextMeasurer
@@ -85,6 +86,7 @@ private fun Stat(label: String, value: String) {
 
 @Composable
 private fun LineChart(data: List<Record>, settings: Settings) {
+  val density = LocalDensity.current
   val measurer = rememberTextMeasurer()
   val labelStyle = TextStyle(fontSize = 10.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
   val gridColor = MaterialTheme.colorScheme.outlineVariant
@@ -94,10 +96,15 @@ private fun LineChart(data: List<Record>, settings: Settings) {
   Canvas(Modifier.fillMaxWidth().height(220.dp)) {
     val w = size.width
     val h = size.height
-    val padLeft = 40f
-    val padRight = 10f
-    val padTop = 12f
-    val padBottom = 28f
+    val padLeft = with(density) { 44.dp.toPx() }
+    val padRight = with(density) { 12.dp.toPx() }
+    val padTop = with(density) { 12.dp.toPx() }
+    val padBottom = with(density) { 26.dp.toPx() }
+    val gridWidth = with(density) { 1.dp.toPx() }
+    val axisWidth = with(density) { 1.5.dp.toPx() }
+    val lineWidth = with(density) { 2.5.dp.toPx() }
+    val dotRadius = with(density) { 3.5.dp.toPx() }
+    val labelGap = with(density) { 4.dp.toPx() }
     val plotW = w - padLeft - padRight
     val plotH = h - padTop - padBottom
 
@@ -120,14 +127,14 @@ private fun LineChart(data: List<Record>, settings: Settings) {
     var tick = ceil(lo / step) * step
     while (tick <= hi + 1e-9) {
       val ty = y(tick)
-      drawLine(gridColor, Offset(padLeft, ty), Offset(w - padRight, ty), strokeWidth = 1f)
+      drawLine(gridColor, Offset(padLeft, ty), Offset(w - padRight, ty), strokeWidth = gridWidth)
       val layout = measurer.measure(String.format(Locale.getDefault(), "%.1f", tick), labelStyle)
-      drawText(layout, topLeft = Offset(padLeft - layout.size.width - 6f, ty - layout.size.height / 2f))
+      drawText(layout, topLeft = Offset(padLeft - labelGap - layout.size.width, ty - layout.size.height / 2f))
       tick += step
     }
 
-    drawLine(axisColor, Offset(padLeft, padTop), Offset(padLeft, padTop + plotH), strokeWidth = 1.5f)
-    drawLine(axisColor, Offset(padLeft, padTop + plotH), Offset(w - padRight, padTop + plotH), strokeWidth = 1.5f)
+    drawLine(axisColor, Offset(padLeft, padTop), Offset(padLeft, padTop + plotH), strokeWidth = axisWidth)
+    drawLine(axisColor, Offset(padLeft, padTop + plotH), Offset(w - padRight, padTop + plotH), strokeWidth = axisWidth)
 
     // 折线
     val path = Path()
@@ -135,15 +142,15 @@ private fun LineChart(data: List<Record>, settings: Settings) {
       val px = x(i); val py = y(r.value)
       if (i == 0) path.moveTo(px, py) else path.lineTo(px, py)
     }
-    drawPath(path, color = Brand, style = Stroke(width = 4f))
+    drawPath(path, color = Brand, style = Stroke(width = lineWidth))
     // 点
-    data.forEachIndexed { i, r -> drawCircle(color = Brand, radius = 5f, center = Offset(x(i), y(r.value))) }
+    data.forEachIndexed { i, r -> drawCircle(color = Brand, radius = dotRadius, center = Offset(x(i), y(r.value))) }
 
     val labelIndices = if (data.size <= 4) data.indices.toList() else listOf(0, data.size / 2, data.size - 1)
     labelIndices.distinct().forEach { i ->
       val layout = measurer.measure(dateFmt.format(Date(data[i].measuredAt)), labelStyle)
-      val cx = (x(i) - layout.size.width / 2f).coerceIn(padLeft, w - padRight - layout.size.width)
-      drawText(layout, topLeft = Offset(cx, h - padBottom + 6f))
+      val cx = (x(i) - layout.size.width / 2f).coerceIn(padLeft, maxOf(padLeft, w - padRight - layout.size.width))
+      drawText(layout, topLeft = Offset(cx, h - padBottom + labelGap))
     }
   }
 }
@@ -153,9 +160,9 @@ private fun niceStep(raw: Double): Double {
   val base = 10.0.pow(floor(log10(raw)))
   val n = raw / base
   val m = when {
-    n <= 1.0 -> 1.0
-    n <= 2.0 -> 2.0
-    n <= 5.0 -> 5.0
+    n < 1.5 -> 1.0
+    n < 3.0 -> 2.0
+    n < 7.0 -> 5.0
     else -> 10.0
   }
   return m * base
