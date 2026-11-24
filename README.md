@@ -6,6 +6,8 @@
 打开 [Releases](https://github.com/JsunDmer/ningwen/releases)，下载最新 `app-release.apk`，
 在手机设置里允许“安装未知来源应用”后安装。
 
+**更新时请直接覆盖安装，不要先卸载**，否则本机记录会丢失。已安装用户也可在 App「我的 → 检查更新」里下载并覆盖安装。
+
 ## 构建（云端）
 推 `v*` tag 即触发 GitHub Actions 构建 release 签名 APK 并发布到 Releases。
 签名密钥存于仓库 Secrets（`KEYSTORE_BASE64/KEYSTORE_PASSWORD/KEY_ALIAS/KEY_PASSWORD`）。
