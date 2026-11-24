@@ -33,6 +33,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.jsundmer.ningwen.domain.DoseText
+import com.jsundmer.ningwen.domain.InrInput
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
@@ -68,9 +70,9 @@ private fun localStartToUtcMidnight(localMillis: Long): Long {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RecordSheet(
-  lastDose: Double?,
+  lastDose: String?,
   onDismiss: () -> Unit,
-  onSubmit: (value: Double, measuredAt: Long, doseTabs: Double?, note: String?) -> Unit,
+  onSubmit: (value: Double, measuredAt: Long, doseTabs: String?, note: String?) -> Unit,
 ) {
   var valueText by remember { mutableStateOf("") }
   var doseText by remember { mutableStateOf(lastDose?.toString() ?: "") }
@@ -108,9 +110,10 @@ fun RecordSheet(
       Spacer(Modifier.height(12.dp))
       OutlinedTextField(
         value = doseText,
-        onValueChange = { doseText = it }, // 步进 0.25，用户可填 1 / 1.25 / 1.5
+        onValueChange = { doseText = it },
         label = { Text("华法林用量（片，可选）") },
-        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
+        supportingText = { Text("可填 1.5，或隔日交替 1.25/1.5") },
+        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
         modifier = Modifier.fillMaxWidth(),
       )
       Spacer(Modifier.height(12.dp))
@@ -136,11 +139,11 @@ fun RecordSheet(
         TextButton(onClick = onDismiss, modifier = Modifier.weight(1f)) { Text("取消") }
         Button(
           onClick = {
-            val v = valueText.toDoubleOrNull()
-            if (v == null || v < 0.5 || v > 5.0) {
-              error = "请输入 0.5–5.0 之间的数值"
+            val v = InrInput.parse(valueText)
+            if (v == null) {
+              error = InrInput.ERROR
             } else {
-              onSubmit(v, measuredAt, doseText.toDoubleOrNull(), note.ifBlank { null })
+              onSubmit(v, measuredAt, DoseText.normalize(doseText), note.ifBlank { null })
             }
           },
           modifier = Modifier.weight(1f),

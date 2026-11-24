@@ -20,7 +20,7 @@ class NingwenViewModel(app: Application) : AndroidViewModel(app) {
   val settings: StateFlow<Settings> =
     repo.settings.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), Settings())
 
-  fun add(value: Double, measuredAt: Long, doseTabs: Double?, note: String?) = viewModelScope.launch {
+  fun add(value: Double, measuredAt: Long, doseTabs: String?, note: String?) = viewModelScope.launch {
     repo.addRecord(Record(value = value, measuredAt = measuredAt, doseTabs = doseTabs, note = note))
   }
 

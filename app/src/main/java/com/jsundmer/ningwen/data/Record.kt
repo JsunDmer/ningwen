@@ -8,6 +8,6 @@ data class Record(
   @PrimaryKey(autoGenerate = true) val id: Long = 0,
   val value: Double,
   val measuredAt: Long,
-  val doseTabs: Double? = null,
+  val doseTabs: String? = null,
   val note: String? = null,
 )

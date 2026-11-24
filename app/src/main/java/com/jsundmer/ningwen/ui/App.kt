@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Restaurant
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.ShowChart
 import androidx.compose.material3.AlertDialog
@@ -27,17 +28,19 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.jsundmer.ningwen.data.Record
+import com.jsundmer.ningwen.ui.diet.DietScreen
 import com.jsundmer.ningwen.ui.export.ExportSheet
 import com.jsundmer.ningwen.ui.home.HomeScreen
 import com.jsundmer.ningwen.ui.record.RecordSheet
 import com.jsundmer.ningwen.ui.settings.SettingsScreen
 import com.jsundmer.ningwen.ui.trend.TrendScreen
 
-enum class Tab(val label: String) { HOME("首页"), TREND("趋势"), SETTINGS("我的") }
+enum class Tab(val label: String) { HOME("首页"), TREND("趋势"), DIET("饮食"), SETTINGS("我的") }
 
 private fun tabIcon(tab: Tab): ImageVector = when (tab) {
   Tab.HOME -> Icons.Filled.Home
   Tab.TREND -> Icons.Filled.ShowChart
+  Tab.DIET -> Icons.Filled.Restaurant
   Tab.SETTINGS -> Icons.Filled.Settings
 }
 
@@ -75,6 +78,7 @@ fun App(vm: NingwenViewModel = viewModel()) {
       when (tab) {
         Tab.HOME -> HomeScreen(records, settings, onDelete = { pendingDelete = it })
         Tab.TREND -> TrendScreen(records, settings)
+        Tab.DIET -> DietScreen()
         Tab.SETTINGS -> SettingsScreen(
           settings = settings,
           onRange = vm::updateTargetRange,

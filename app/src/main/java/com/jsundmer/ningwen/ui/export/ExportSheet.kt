@@ -18,6 +18,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.content.FileProvider
 import com.jsundmer.ningwen.data.Record
+import com.jsundmer.ningwen.domain.RecordCsv
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -42,15 +43,12 @@ fun ExportSheet(records: List<Record>, onDismiss: () -> Unit) {
 
 private fun shareCsv(context: Context, records: List<Record>) {
   val fmt = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-  val header = "日期,INR,用量(片),备注"
   val body = records.sortedBy { it.measuredAt }.joinToString("\n") { r ->
-    val dose = r.doseTabs?.toString() ?: ""
-    val note = r.note?.replace(",", "，") ?: "" // 避免逗号破坏 CSV 列
-    "${fmt.format(Date(r.measuredAt))},${r.value},$dose,$note"
+    RecordCsv.line(fmt.format(Date(r.measuredAt)), r.value, r.doseTabs, r.note)
   }
   val dir = File(context.cacheDir, "export").apply { mkdirs() }
   val file = File(dir, "ningwen.csv")
-  file.writeText(header + "\n" + body)
+  file.writeText(RecordCsv.HEADER + "\n" + body)
 
   val uri = FileProvider.getUriForFile(context, "${context.packageName}.fileprovider", file)
   val intent = Intent(Intent.ACTION_SEND).apply {
